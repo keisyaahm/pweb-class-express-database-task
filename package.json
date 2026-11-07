@@ -1,0 +1,16 @@
+{
+  "name": "keisya-tugas-express-week9",
+  "version": "1.0.0",
+  "description": "Tugas Week 9 - ExpressJS Product API dengan penyimpanan array",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Keisya Halimah Mulia",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}

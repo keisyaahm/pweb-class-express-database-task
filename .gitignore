@@ -1,0 +1,8 @@
+node_modules/
+.env
+*.log
+.vscode/
+express_product_api-main/
+keisya-tugas-express-week9/
+keisya-tugas-database-express-week10/
+src/
