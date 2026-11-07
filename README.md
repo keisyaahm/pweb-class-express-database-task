@@ -1,188 +1,176 @@
-# Tugas Week 10 - ExpressJS x PostgreSQL x Prisma
+# Tugas Week 9 & 10 - ExpressJS + PostgreSQL + Prisma
 
-**Nama:** Keisya Halimah Mulia
-**NRP:** 5027251068
+**Nama:** Keisya Halimah Mulia  
+**NRP:** 5027251068  
 **Kelas:** Pemrograman Web C
 
 ---
 
-## Deskripsi
+## Deskripsi Tugas
 
-Lanjutan tugas week 9. Data produk tidak lagi disimpan di array memori, tetapi
-disimpan permanen di PostgreSQL melalui Prisma ORM. Project tetap memisahkan
-**route** dan **controller**, dengan tambahan **middleware** untuk validasi,
-logging, dan penanganan error.
+Pull Request ini mengintegrasikan materi **Week 9** (REST API Express dasar dengan arsitektur Route & Controller dan in-memory array) dan **Week 10** (Migrasi penyimpanan data ke **PostgreSQL** menggunakan **Prisma ORM**, dilengkapi validasi input dan error handling middleware).
 
-Fitur yang tersedia:
-
-- `GET /products` - menampilkan seluruh data
-- `GET /products/:id` - menampilkan satu data berdasarkan ID
-- `POST /products` - membuat data baru
-- `PUT /products/:id` - mengupdate data berdasarkan ID
-- `DELETE /products/:id` - menghapus data berdasarkan ID
+---
 
 ## Struktur Project
 
 ```
-keisya-tugas-database-express-week10/
-├── app.js
+├── app.js                        ← Express server entrypoint
 ├── controllers/
-│   ├── productGetController.js
-│   ├── productPostController.js
-│   ├── productPutController.js
-│   └── productDeleteController.js
+│   ├── productController.js      ← Week 9: handler GET & POST (array)
+│   ├── productGetController.js   ← Week 10: GET dengan Prisma
+│   ├── productPostController.js  ← Week 10: POST dengan Prisma
+│   ├── productPutController.js   ← Week 10: PUT dengan Prisma
+│   └── productDeleteController.js← Week 10: DELETE dengan Prisma
+├── data/
+│   └── products.js               ← Week 9: array in-memory
 ├── lib/
-│   └── prisma.js
+│   └── prisma.js                 ← Prisma Client singleton
 ├── middlewares/
-│   ├── errorHandler.js
-│   ├── notFoundHandler.js
-│   ├── requestLogger.js
-│   ├── validateId.js
-│   └── validateProduct.js
+│   ├── requestLogger.js          ← Logging setiap HTTP request
+│   ├── validateProduct.js        ← Validasi field name & price
+│   ├── validateId.js             ← Validasi parameter ID
+│   ├── errorHandler.js           ← Error handling terpusat
+│   └── notFoundHandler.js        ← Handler 404 route tidak ada
 ├── prisma/
-│   ├── schema.prisma
-│   └── migrations/
-│       ├── migration_lock.toml
-│       └── 20261104000000_init/
-│           └── migration.sql
+│   ├── schema.prisma             ← Model Product & konfigurasi DB
+│   ├── seed.js                   ← Data awal Week 9
+│   └── migrations/               ← Riwayat perubahan tabel
 ├── routes/
-│   ├── productRoutes.js
+│   ├── productRoutes.js          ← Router utama
 │   ├── productGetRoutes.js
 │   ├── productPostRoutes.js
 │   ├── productPutRoutes.js
 │   └── productDeleteRoutes.js
-├── .env.example
-├── .gitignore
-├── package.json
-└── README.md
+├── docs/evidence/                ← Screenshot bukti pengujian
+└── postman/                      ← Koleksi Postman
 ```
 
-## Yang Perlu Di-install
+---
 
-1. **Node.js** (versi 18 ke atas) - https://nodejs.org
-2. **Neon PostgreSQL** - https://neon.tech
-   - PostgreSQL lokal tidak wajib karena database tersedia online melalui Neon.
-3. **Postman** / **Bruno** / **Hoppscotch** untuk menguji endpoint dan mengambil screenshot.
-4. **Git** dan akun **GitHub** untuk mengumpulkan repository.
-5. **VS Code** (opsional) untuk mengedit kode.
+## Daftar Endpoint
 
-## Menyiapkan Database
+| Method | Endpoint | Status Sukses | Keterangan |
+|--------|----------|--------------|------------|
+| GET | `/products` | 200 | Seluruh produk |
+| GET | `/products/:id` | 200 | Satu produk; 404 jika tidak ada |
+| POST | `/products` | 201 | Membuat produk baru |
+| PUT | `/products/:id` | 200 | Update produk; 404 jika tidak ada |
+| DELETE | `/products/:id` | 204 | Hapus produk; 404 jika tidak ada |
 
-1. Salin `.env.example` menjadi `.env`.
-2. Ganti `YOUR_NEON_PASSWORD` dengan password Neon asli. Jangan commit file `.env`.
-   ```
-   DATABASE_URL=""
-   DIRECT_URL=""
-   PORT=3000
-   ```
+---
 
-## Menjalankan Project
+## Laporan Evidence Pengujian
+
+### 1. GET /products — Menampilkan Seluruh Data (200 OK)
+
+![GET all products](docs/evidence/01-get-all-products.png)
+
+---
+
+### 2. GET /products/1 — Menampilkan Produk Berdasarkan ID (200 OK)
+
+![GET product by ID](docs/evidence/02-get-product-by-id.png)
+
+---
+
+### 3. GET /products/999 — Produk Tidak Ditemukan (404 Not Found)
+
+![GET product not found](docs/evidence/03-get-product-not-found.png)
+
+---
+
+### 4. GET /products/abc — ID Tidak Valid (400 Bad Request)
+
+![GET invalid ID](docs/evidence/04-get-invalid-id.png)
+
+---
+
+### 5. POST /products — Validasi Gagal: Name Kosong (400 Bad Request)
+
+![POST validation fail name](docs/evidence/05-post-validation-fail-name.png)
+
+---
+
+### 6. POST /products — Validasi Gagal: Price Negatif (400 Bad Request)
+
+![POST validation fail price](docs/evidence/06-post-validation-fail-price.png)
+
+---
+
+### 7. Database BEFORE POST — Kondisi Awal Data Week 9
+
+![DB before POST](docs/evidence/07-db-before-post.png)
+
+---
+
+### 8. POST /products — Membuat Produk Baru (201 Created)
+
+![POST success](docs/evidence/08-post-success.png)
+
+---
+
+### 9. Database AFTER POST — Produk Baru Tersimpan
+
+![DB after POST](docs/evidence/09-db-after-post.png)
+
+---
+
+### 10. PUT /products/:id — Update Produk (200 OK)
+
+![PUT success](docs/evidence/10-put-success.png)
+
+---
+
+### 11. Database AFTER PUT — Data Produk Terupdate
+
+![DB after PUT](docs/evidence/11-db-after-put.png)
+
+---
+
+### 12. DELETE /products/:id — Hapus Produk (204 No Content)
+
+![DELETE success](docs/evidence/12-delete-success.png)
+
+---
+
+### 13. DELETE /products/999 — Produk Tidak Ada (404 Not Found)
+
+![DELETE not found](docs/evidence/13-delete-not-found.png)
+
+---
+
+### 14. Database AFTER DELETE — Produk Terhapus, Data Kembali ke Awal
+
+![DB after DELETE](docs/evidence/14-db-after-delete.png)
+
+---
+
+## Cara Menjalankan
 
 ```bash
+# Install dependencies
 npm install
+
+# Generate Prisma Client
 npx prisma generate
+
+# Deploy migrasi (atau gunakan migrate dev untuk development)
 npx prisma migrate deploy
+
+# Seed data awal (Buku & Pulpen)
+node prisma/seed.js
+
+# Jalankan server
 npm start
 ```
 
 Server berjalan di `http://localhost:3000`.
 
-Untuk development, perintah `npm run prisma:migrate` dapat dipakai saat ada
-perubahan schema. Folder migration wajib ikut di-commit ke Git (tanpa `.env`).
+---
 
-## Melihat Isi Database
+## Catatan Penting
 
-```bash
-npm run prisma:studio
-```
-
-Buka alamat yang ditampilkan Prisma Studio (default `http://localhost:5555`).
-Gunakan Studio untuk screenshot kondisi database **before** dan **after** POST,
-PUT, dan DELETE.
-
-## Koleksi Postman
-
-Import file `postman/Keisya-Week10.postman_collection.json` ke Postman. Koleksi
-sudah memuat skenario sukses dan error. Sesuaikan variable `productId` dengan ID
-hasil POST sebelum menguji GET/PUT/DELETE berdasarkan ID.
-
-## Daftar Endpoint
-
-| Method | Endpoint        | Status Sukses | Keterangan                          |
-| ------ | --------------- | ------------- | ----------------------------------- |
-| GET    | `/products`     | 200           | Array semua produk                  |
-| GET    | `/products/:id` | 200           | Satu produk; 404 jika tidak ada     |
-| POST   | `/products`     | 201           | Membuat produk baru                 |
-| PUT    | `/products/:id` | 200           | Mengupdate produk; 404 jika tidak ada |
-| DELETE | `/products/:id` | 204           | Menghapus produk; 404 jika tidak ada |
-
-### Validasi
-
-- `name` wajib string dan tidak boleh kosong.
-- `price` wajib bilangan bulat non-negatif (rupiah bulat).
-- `id` pada path wajib bilangan bulat positif.
-- Input tidak valid menghasilkan `400 Bad Request`.
-- Body JSON rusak menghasilkan `400 Bad Request`.
-- ID yang tidak ada pada PUT/DELETE menghasilkan `404 Not Found`.
-
-## Contoh Request
-
-### GET semua produk
-
-```bash
-curl -i http://localhost:3000/products
-```
-
-### POST produk baru
-
-```bash
-curl -i -X POST http://localhost:3000/products \
-  -H "Content-Type: application/json" \
-  -d "{\"name\":\"Buku\",\"price\":15000}"
-```
-
-### GET produk berdasarkan ID
-
-```bash
-curl -i http://localhost:3000/products/1
-```
-
-### PUT update produk
-
-```bash
-curl -i -X PUT http://localhost:3000/products/1 \
-  -H "Content-Type: application/json" \
-  -d "{\"name\":\"Buku Tulis\",\"price\":17500}"
-```
-
-### DELETE produk
-
-```bash
-curl -i -X DELETE http://localhost:3000/products/1
-```
-
-## Checklist Evidence Laporan
-
-Ambil screenshot dari Postman/Bruno/Hoppscotch dan Prisma Studio untuk:
-
-1. **Success GET all** - status 200 dan array produk.
-2. **Success POST #1** - status 201, perhatikan ID dari database.
-3. **Success POST #2** - status 201 dengan ID berbeda.
-4. **Success GET by ID** - status 200 dan data sesuai.
-5. **Success PUT** - status 200 dan data berubah.
-6. **Success DELETE** - status 204, lalu GET list membuktikan data hilang.
-7. **Validasi gagal** - `name` kosong / `price` negatif / `price` bukan angka -> 400.
-8. **ID tidak ditemukan** - GET/PUT/DELETE `/products/999` -> 404.
-9. **ID tidak valid** - `/products/abc` -> 400.
-10. **Database before - after** - screenshot Prisma Studio sebelum dan sesudah
-    POST/PUT/DELETE.
-11. **Persistensi** - lakukan POST, restart server Express, lalu GET kembali;
-    produk harus tetap ada. Ini membuktikan data tersimpan di PostgreSQL, bukan array.
-
-## Catatan Migration dan Rollback
-
-- `prisma migrate dev` mencatat perubahan struktur ke folder `prisma/migrations`.
-- Perubahan schema saja tidak mengubah tabel database sebelum migration dijalankan.
-- Rollback dilakukan dengan membuat migration baru yang membalik perubahan,
-  bukan menghapus riwayat migration yang sudah diterapkan.
-- `prisma migrate reset` menghapus data dan bukan cara rollback satu migration.
+- Data awal Week 9 (Buku Rp 15.000, Pulpen Rp 5.000) tersimpan permanen di PostgreSQL.
+- Restart server **tidak** menghapus data — ini membuktikan migrasi dari volatile array ke persistent database berhasil.
+- File `.env` **tidak** di-commit ke repository (berisi credential database).
