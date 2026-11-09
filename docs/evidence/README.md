@@ -1,8 +1,5 @@
 # Evidence Pengujian (Screenshot Asli)
 
-Semua gambar di folder ini sudah diambil langsung dari aplikasi asli yang
-berjalan, bukan dari halaman web tiruan dan bukan hasil rekayasa gambar.
-
 1. **Hoppscotch** (`https://hoppscotch.io`) untuk seluruh request dan response
    API. Hoppscotch adalah API client asli, sama seperti Postman.
 2. **Prisma Studio** (`npx prisma studio`) untuk kondisi tabel `Product`

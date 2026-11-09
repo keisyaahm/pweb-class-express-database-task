@@ -160,11 +160,6 @@ Catatan:
 
 ## Evidence Screenshot
 
-Semua screenshot di bawah ini diambil langsung dari aplikasi asli yang sedang
-berjalan: **Hoppscotch** untuk request/response API dan **Prisma Studio**
-untuk isi tabel `Product`. Bukan halaman web buatan sendiri dan bukan hasil
-edit gambar.
-
 ### 01. GET `/products` - 200 OK
 
 Menampilkan seluruh produk yang ada di database, yaitu Buku dan Pulpen.
