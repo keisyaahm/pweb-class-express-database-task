@@ -12,9 +12,13 @@ Project ini **100% REST API (backend)**. Tidak ada halaman HTML/CSS/React dan
 tidak ada UI yang dibuat sendiri.
 
 - Server dijalankan lewat terminal (`npm start` atau `npm run dev`).
-- Request diuji lewat **Postman** (atau Bruno/Hoppscotch).
+- Request diuji lewat **Postman** atau **Hoppscotch** (API client asli).
 - Isi database dilihat lewat **Prisma Studio**.
 - **Tidak perlu** membuka Inspect Element atau Console browser.
+
+Seluruh screenshot di `docs/evidence/` diambil langsung dari aplikasi asli:
+**Hoppscotch** untuk request/response API dan **Prisma Studio** untuk isi tabel
+`Product`. Tidak ada halaman web tiruan atau gambar hasil rekayasa.
 
 ---
 
@@ -124,7 +128,9 @@ npx prisma studio
 
 ---
 
-## Cara Menguji di Postman
+## Cara Menguji di Postman / Hoppscotch
+
+### Postman
 
 1. Pastikan server sudah berjalan (`npm start`).
 2. Buka aplikasi **Postman**.
@@ -152,13 +158,27 @@ Catatan:
 - Screenshot **harus** diambil dari Postman/Bruno/Hoppscotch asli, bukan dari
   halaman web tiruan.
 
+### Hoppscotch
+
+1. Buka `https://hoppscotch.io`.
+2. Pilih method (GET, POST, PUT, atau DELETE) lalu isi URL, contoh
+   `http://localhost:3000/products`.
+3. Untuk POST dan PUT, buka tab **Body**, pilih content type
+   `application/json`, lalu isi body JSON.
+4. Klik **Send**.
+5. Status dan **Response Body** akan muncul di panel bawah. Screenshot bagian
+   method, URL, status, dan response tersebut.
+
+Screenshot pada folder `docs/evidence/` diambil dengan cara ini, sehingga yang
+terlihat adalah request dan response asli dari server Express.
+
 ---
 
 ## Checklist Evidence yang Perlu Di-screenshot
 
 Simpan hasil screenshot asli ke folder `docs/evidence/` dengan nama berikut.
-Folder ini sengaja dikosongkan dari screenshot lama karena screenshot tersebut
-bukan berasal dari Postman/Prisma Studio asli.
+Semua file pada tabel di bawah sudah tersedia dan diambil dari aplikasi asli
+(Hoppscotch dan Prisma Studio).
 
 | No | Aksi | Status yang Diharapkan | Nama File |
 | -- | ---- | ---------------------- | --------- |
@@ -180,6 +200,23 @@ bukan berasal dari Postman/Prisma Studio asli.
 
 Langkah screenshot Prisma Studio: jalankan `npx prisma studio`, buka tab yang
 terbuka otomatis, lalu screenshot tabel `Product` beserta jumlah record-nya.
+
+### Urutan Pengujian yang Dipakai
+
+1. Database direset ke data awal: `Buku` dan `Pulpen`.
+2. Screenshot 01 sampai 06 diambil dari request yang gagal maupun berhasil.
+3. Screenshot 07 diambil dari Prisma Studio sebelum ada data baru.
+4. Request 08 membuat produk baru (`Spidol`) dengan status `201 Created`.
+5. Screenshot 09 menunjukkan produk baru sudah masuk ke tabel.
+6. Request 10 mengubah produk tersebut, lalu screenshot 11 menunjukkan
+   perubahan datanya.
+7. Request 12 menghapus produk tersebut, request 13 menguji ID yang tidak ada,
+   dan screenshot 14 menunjukkan tabel kembali berisi 2 data.
+8. Server dihentikan dengan Ctrl+C lalu dijalankan lagi dengan `npm start`.
+   Request 15 membuktikan data tetap ada setelah restart.
+
+Semua status dan isi response pada screenshot berasal dari server yang benar
+benar berjalan dan terhubung ke PostgreSQL, bukan hasil edit gambar.
 
 ---
 
