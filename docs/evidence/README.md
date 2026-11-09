@@ -1,7 +1,7 @@
 # Evidence Pengujian (Screenshot Asli)
 
-Semua gambar di folder ini diambil langsung dari aplikasi asli yang berjalan,
-bukan dari halaman web tiruan dan bukan hasil rekayasa gambar:
+Semua gambar di folder ini sudah diambil langsung dari aplikasi asli yang
+berjalan, bukan dari halaman web tiruan dan bukan hasil rekayasa gambar.
 
 1. **Hoppscotch** (`https://hoppscotch.io`) untuk seluruh request dan response
    API. Hoppscotch adalah API client asli, sama seperti Postman.
@@ -11,25 +11,28 @@ bukan dari halaman web tiruan dan bukan hasil rekayasa gambar:
 Server Express berjalan di `http://localhost:3000` dan terhubung ke PostgreSQL
 (Neon) melalui Prisma.
 
+Screenshot yang sama juga ditampilkan langsung di `README.md` utama, di bagian
+**Evidence Screenshot**.
+
 ## Daftar file
 
-| No | Aksi | Status | Nama File |
-| -- | ---- | ------ | --------- |
-| 01 | GET `/products` | 200 | `01-get-all-products.png` |
-| 02 | GET `/products/1` | 200 | `02-get-product-by-id.png` |
-| 03 | GET `/products/999` | 404 | `03-get-product-not-found.png` |
-| 04 | GET `/products/abc` | 400 | `04-get-invalid-id.png` |
-| 05 | POST `name` kosong | 400 | `05-post-validation-fail-name.png` |
-| 06 | POST `price` negatif | 400 | `06-post-validation-fail-price.png` |
-| 07 | Prisma Studio sebelum POST | 2 data | `07-db-before-post.png` |
-| 08 | POST `Spidol` / 7500 | 201 | `08-post-success.png` |
-| 09 | Prisma Studio setelah POST | 3 data | `09-db-after-post.png` |
-| 10 | PUT `/products/3` | 200 | `10-put-success.png` |
-| 11 | Prisma Studio setelah PUT | data berubah | `11-db-after-put.png` |
-| 12 | DELETE `/products/3` | 204 | `12-delete-success.png` |
-| 13 | DELETE `/products/999` | 404 | `13-delete-not-found.png` |
-| 14 | Prisma Studio setelah DELETE | 2 data | `14-db-after-delete.png` |
-| 15 | Restart server lalu GET `/products` | 200, data tetap ada | `15-data-persists-after-restart.png` |
+| No | Aksi                                              | Status            | Nama File                        |
+| -- | ------------------------------------------------- | ----------------- | -------------------------------- |
+| 01 | GET `/products`                                   | 200               | `01-get-all-products.png`        |
+| 02 | GET `/products/1`                                 | 200               | `02-get-product-by-id.png`       |
+| 03 | GET `/products/999`                               | 404               | `03-get-product-not-found.png`   |
+| 04 | GET `/products/abc`                               | 400               | `04-get-invalid-id.png`          |
+| 05 | POST `name` kosong                                | 400               | `05-post-validation-fail-name.png` |
+| 06 | POST `price` negatif                              | 400               | `06-post-validation-fail-price.png` |
+| 07 | Prisma Studio sebelum POST                        | 2 data            | `07-db-before-post.png`          |
+| 08 | POST `Spidol` / 7500                              | 201               | `08-post-success.png`            |
+| 09 | Prisma Studio setelah POST                        | 3 data            | `09-db-after-post.png`           |
+| 10 | PUT `/products/3`                                 | 200               | `10-put-success.png`             |
+| 11 | Prisma Studio setelah PUT                         | data berubah      | `11-db-after-put.png`            |
+| 12 | DELETE `/products/3`                              | 204               | `12-delete-success.png`          |
+| 13 | DELETE `/products/999`                            | 404               | `13-delete-not-found.png`        |
+| 14 | Prisma Studio setelah DELETE                      | 2 data            | `14-db-after-delete.png`         |
+| 15 | Restart server lalu GET `/products`               | 200, data tetap ada | `15-data-persists-after-restart.png` |
 
 ## Yang terlihat di screenshot API
 

@@ -1,35 +1,30 @@
 # Tugas Week 9 & 10: ExpressJS + PostgreSQL + Prisma
 
-**Nama:** Keisya Halimah Mulia  
-**NRP:** 5027251068  
+**Nama:** Keisya Halimah Mulia
+**NRP:** 5027251068
 **Kelas:** Pemrograman Web C
 
 ---
 
-## Penting: Ini Tugas Backend, Bukan Frontend
+## Tentang Tugas Ini
 
-Project ini **100% REST API (backend)**. Tidak ada halaman HTML/CSS/React dan
-tidak ada UI yang dibuat sendiri.
+Di tugas ini saya membuat REST API produk menggunakan ExpressJS. Mulanya data
+disimpan di array (`data/products.js`) untuk Week 9, lalu dipindahkan ke
+PostgreSQL menggunakan Prisma ORM untuk Week 10.
 
-- Server dijalankan lewat terminal (`npm start` atau `npm run dev`).
-- Request diuji lewat **Postman** atau **Hoppscotch** (API client asli).
-- Isi database dilihat lewat **Prisma Studio**.
-- **Tidak perlu** membuka Inspect Element atau Console browser.
-
-Seluruh screenshot di `docs/evidence/` diambil langsung dari aplikasi asli:
-**Hoppscotch** untuk request/response API dan **Prisma Studio** untuk isi tabel
-`Product`. Tidak ada halaman web tiruan atau gambar hasil rekayasa.
+Project ini **backend saja**. Tidak ada tampilan HTML/CSS/React buatan sendiri.
+Semua request diuji lewat aplikasi API client asli, yaitu **Hoppscotch**, dan
+isi database dilihat lewat **Prisma Studio**. Jadi tidak ada halaman web tiruan
+atau screenshot hasil rekayasa.
 
 ---
 
-## Deskripsi Tugas
+## Yang Dipelajari
 
-Project ini menggabungkan materi **Week 9** dan **Week 10**:
-
-- **Week 9:** REST API Express dasar dengan arsitektur Route & Controller,
-  data disimpan di array in-memory (`data/products.js`).
-- **Week 10:** Data dipindahkan ke **PostgreSQL** menggunakan **Prisma ORM**,
-  ditambah validasi input, error handling middleware, dan operasi CRUD lengkap.
+- **Week 9:** REST API Express dengan pemisahan route dan controller, data
+  disimpan di array in-memory.
+- **Week 10:** Data dipindah ke PostgreSQL lewat Prisma, ditambah validasi
+  input, error handling, dan CRUD lengkap (GET, POST, PUT, DELETE).
 
 ---
 
@@ -67,26 +62,26 @@ Project ini menggabungkan materi **Week 9** dan **Week 10**:
 │   ├── Keisya-Week10.postman_collection.json
 │   └── Keisya-Week10.postman_environment.json
 └── docs/
-    └── evidence/                  <- Tempat screenshot asli milikmu
+    └── evidence/                  <- Screenshot asli dari Hoppscotch & Prisma Studio
 ```
 
 ---
 
 ## Daftar Endpoint
 
-| Method | Endpoint        | Status Sukses | Keterangan                              |
-| ------ | --------------- | ------------- | --------------------------------------- |
-| GET    | `/products`     | 200           | Seluruh produk                          |
-| GET    | `/products/:id` | 200           | Satu produk; 404 jika tidak ada         |
-| POST   | `/products`     | 201           | Membuat produk baru                     |
-| PUT    | `/products/:id` | 200           | Update produk; 404 jika tidak ada       |
-| DELETE | `/products/:id` | 204           | Hapus produk; 404 jika tidak ada        |
+| Method | Endpoint        | Status Sukses | Keterangan                        |
+| ------ | --------------- | ------------- | --------------------------------- |
+| GET    | `/products`     | 200           | Seluruh produk                    |
+| GET    | `/products/:id` | 200           | Satu produk, 404 jika tidak ada   |
+| POST   | `/products`     | 201           | Membuat produk baru               |
+| PUT    | `/products/:id` | 200           | Update produk, 404 jika tidak ada |
+| DELETE | `/products/:id` | 204           | Hapus produk, 404 jika tidak ada  |
 
 Aturan validasi:
 
 - `name` wajib string dan tidak boleh kosong.
 - `price` wajib bilangan bulat dan tidak boleh negatif.
-- `:id` wajib bilangan bulat positif, jika tidak maka `400 Bad Request`.
+- `:id` wajib bilangan bulat positif. Kalau tidak, hasilnya `400 Bad Request`.
 
 ---
 
@@ -96,8 +91,7 @@ Aturan validasi:
 # 1. Install dependencies
 npm install
 
-# 2. Salin file environment lalu isi DATABASE_URL dan DIRECT_URL
-#    (contoh tersedia di .env.example)
+# 2. Salin .env.example menjadi .env, lalu isi DATABASE_URL dan DIRECT_URL
 
 # 3. Generate Prisma Client
 npx prisma generate
@@ -112,7 +106,7 @@ npm run prisma:seed
 npm start        # atau: npm run dev
 ```
 
-Shortcut untuk langkah 3 sampai 5 (generate + migrasi + seed):
+Langkah 3 sampai 5 bisa diringkas jadi satu perintah:
 
 ```bash
 npm run db:setup
@@ -120,7 +114,7 @@ npm run db:setup
 
 Server berjalan di `http://localhost:3000`.
 
-Untuk melihat isi database:
+Kalau mau melihat isi database:
 
 ```bash
 npx prisma studio
@@ -128,195 +122,171 @@ npx prisma studio
 
 ---
 
-## Cara Menguji di Postman / Hoppscotch
+## Cara Menguji di Hoppscotch
 
-### Postman
+1. Jalankan server dulu (`npm start`).
+2. Buka `https://hoppscotch.io`.
+3. Pilih method (GET, POST, PUT, atau DELETE), lalu isi URL, misalnya
+   `http://localhost:3000/products`.
+4. Untuk POST dan PUT, buka tab **Body**, pilih content type
+   `application/json`, lalu isi JSON-nya.
+5. Klik **Send**.
+6. Status dan **Response Body** muncul di panel bawah.
 
-1. Pastikan server sudah berjalan (`npm start`).
-2. Buka aplikasi **Postman**.
-3. Klik **Import** lalu pilih
+Screenshot di folder `docs/evidence/` diambil dengan cara ini, jadi yang
+terlihat memang request dan response asli dari server Express.
+
+## Cara Menguji di Postman
+
+1. Jalankan server dulu (`npm start`).
+2. Buka **Postman**, klik **Import**, lalu pilih
    `postman/Keisya-Week10.postman_collection.json`.
-   (Opsional) import juga `postman/Keisya-Week10.postman_environment.json`
+3. Opsional: import juga `postman/Keisya-Week10.postman_environment.json`,
    lalu pilih environment **Keisya Week 10 - Local**.
 4. Buka collection **Keisya Week 10 - Product API**.
-5. Pastikan collection variable `baseUrl` berisi `http://localhost:3000`.
-6. Klik salah satu request, lalu klik **Send**.
-7. Di bagian bawah akan muncul:
-   - **Status** (contoh: `200 OK`, `201 Created`, `404 Not Found`),
-   - tab **Body** dengan pilihan **Pretty** dan **JSON**.
-8. Screenshot bagian URL + method, tab Body, dan Status tersebut.
+5. Klik salah satu request, lalu klik **Send**.
 
 Catatan:
 
-- Request **08 - POST buat produk** otomatis menyimpan ID produk baru ke
-  variable `createdProductId`. Jadi request PUT, GET, dan DELETE sesudahnya
-  memakai ID produk yang baru dibuat, bukan ID produk seed.
+- Request **08 - POST buat produk** menyimpan ID produk baru ke variable
+  `createdProductId`. Jadi request PUT, GET, dan DELETE setelahnya memakai
+  produk yang baru dibuat, bukan produk seed.
 - Request **02 - GET produk by ID** memakai variable `productId` (default `1`),
-  jadi produk seed tidak ikut berubah saat collection dijalankan.
-- Jika collection dijalankan berurutan (Collection Runner), semua request
-  berjalan tanpa perlu mengganti ID manual.
-- Screenshot **harus** diambil dari Postman/Bruno/Hoppscotch asli, bukan dari
-  halaman web tiruan.
-
-### Hoppscotch
-
-1. Buka `https://hoppscotch.io`.
-2. Pilih method (GET, POST, PUT, atau DELETE) lalu isi URL, contoh
-   `http://localhost:3000/products`.
-3. Untuk POST dan PUT, buka tab **Body**, pilih content type
-   `application/json`, lalu isi body JSON.
-4. Klik **Send**.
-5. Status dan **Response Body** akan muncul di panel bawah. Screenshot bagian
-   method, URL, status, dan response tersebut.
-
-Screenshot pada folder `docs/evidence/` diambil dengan cara ini, sehingga yang
-terlihat adalah request dan response asli dari server Express.
+  jadi produk seed tidak ikut berubah.
+- Kalau collection dijalankan berurutan lewat Collection Runner, semua request
+  jalan tanpa perlu mengganti ID manual.
 
 ---
 
-## Checklist Evidence yang Perlu Di-screenshot
+## Evidence Screenshot
 
-Simpan hasil screenshot asli ke folder `docs/evidence/` dengan nama berikut.
-Semua file pada tabel di bawah sudah tersedia dan diambil dari aplikasi asli
-(Hoppscotch dan Prisma Studio).
+Semua screenshot di bawah ini diambil langsung dari aplikasi asli yang sedang
+berjalan: **Hoppscotch** untuk request/response API dan **Prisma Studio**
+untuk isi tabel `Product`. Bukan halaman web buatan sendiri dan bukan hasil
+edit gambar.
 
-| No | Aksi | Status yang Diharapkan | Nama File |
-| -- | ---- | ---------------------- | --------- |
-| 01 | GET `/products` | 200 OK | `01-get-all-products.png` |
-| 02 | GET `/products/1` | 200 OK | `02-get-product-by-id.png` |
-| 03 | GET `/products/999` | 404 Not Found | `03-get-product-not-found.png` |
-| 04 | GET `/products/abc` | 400 Bad Request | `04-get-invalid-id.png` |
-| 05 | POST dengan `name` kosong | 400 Bad Request | `05-post-validation-fail-name.png` |
-| 06 | POST dengan `price` negatif | 400 Bad Request | `06-post-validation-fail-price.png` |
-| 07 | Prisma Studio sebelum POST | 2 data (Buku, Pulpen) | `07-db-before-post.png` |
-| 08 | POST `{"name":"Spidol","price":7500}` | 201 Created | `08-post-success.png` |
-| 09 | Prisma Studio setelah POST | 3 data | `09-db-after-post.png` |
-| 10 | PUT `/products/:id` | 200 OK | `10-put-success.png` |
-| 11 | Prisma Studio setelah PUT | Data berubah | `11-db-after-put.png` |
-| 12 | DELETE `/products/:id` | 204 No Content | `12-delete-success.png` |
-| 13 | DELETE `/products/999` | 404 Not Found | `13-delete-not-found.png` |
-| 14 | Prisma Studio setelah DELETE | Kembali 2 data | `14-db-after-delete.png` |
-| 15 | Hentikan server (Ctrl+C), jalankan lagi, lalu GET `/products` | 200 OK, data tetap ada | `15-data-persists-after-restart.png` |
+### 01. GET `/products` - 200 OK
 
-Langkah screenshot Prisma Studio: jalankan `npx prisma studio`, buka tab yang
-terbuka otomatis, lalu screenshot tabel `Product` beserta jumlah record-nya.
+Menampilkan seluruh produk yang ada di database, yaitu Buku dan Pulpen.
 
-### Urutan Pengujian yang Dipakai
+![01 - GET semua produk](docs/evidence/01-get-all-products.png)
 
-1. Database direset ke data awal: `Buku` dan `Pulpen`.
-2. Screenshot 01 sampai 06 diambil dari request yang gagal maupun berhasil.
-3. Screenshot 07 diambil dari Prisma Studio sebelum ada data baru.
-4. Request 08 membuat produk baru (`Spidol`) dengan status `201 Created`.
-5. Screenshot 09 menunjukkan produk baru sudah masuk ke tabel.
-6. Request 10 mengubah produk tersebut, lalu screenshot 11 menunjukkan
-   perubahan datanya.
-7. Request 12 menghapus produk tersebut, request 13 menguji ID yang tidak ada,
-   dan screenshot 14 menunjukkan tabel kembali berisi 2 data.
-8. Server dihentikan dengan Ctrl+C lalu dijalankan lagi dengan `npm start`.
-   Request 15 membuktikan data tetap ada setelah restart.
+### 02. GET `/products/1` - 200 OK
 
-Semua status dan isi response pada screenshot berasal dari server yang benar
-benar berjalan dan terhubung ke PostgreSQL, bukan hasil edit gambar.
+Mengambil satu produk dengan id 1.
 
----
+![02 - GET produk by ID](docs/evidence/02-get-product-by-id.png)
 
-## Screenshot Evidence
+### 03. GET `/products/999` - 404 Not Found
 
-### Request API (Hoppscotch)
+Produk dengan id 999 tidak ada, jadi server membalas 404.
 
-**01. GET `/products` - 200 OK**
+![03 - GET produk tidak ditemukan](docs/evidence/03-get-product-not-found.png)
 
-![GET all products](docs/evidence/01-get-all-products.png)
+### 04. GET `/products/abc` - 400 Bad Request
 
-**02. GET `/products/1` - 200 OK**
+ID harus bilangan bulat. Karena `abc` bukan angka, server membalas 400.
 
-![GET product by ID](docs/evidence/02-get-product-by-id.png)
+![04 - GET ID tidak valid](docs/evidence/04-get-invalid-id.png)
 
-**03. GET `/products/999` - 404 Not Found**
+### 05. POST dengan `name` kosong - 400 Bad Request
 
-![GET product not found](docs/evidence/03-get-product-not-found.png)
+Validasi menolak request karena `name` kosong.
 
-**04. GET `/products/abc` - 400 Bad Request**
+![05 - POST validasi name gagal](docs/evidence/05-post-validation-fail-name.png)
 
-![GET invalid ID](docs/evidence/04-get-invalid-id.png)
+### 06. POST dengan `price` negatif - 400 Bad Request
 
-**05. POST `name` kosong - 400 Bad Request**
+Validasi menolak request karena `price` negatif.
 
-![POST validation fail name](docs/evidence/05-post-validation-fail-name.png)
+![06 - POST validasi price gagal](docs/evidence/06-post-validation-fail-price.png)
 
-**06. POST `price` negatif - 400 Bad Request**
+### 07. Prisma Studio sebelum POST - 2 data
 
-![POST validation fail price](docs/evidence/06-post-validation-fail-price.png)
+Isi tabel `Product` masih berisi data awal: Buku dan Pulpen.
 
-**08. POST `Spidol` 7500 - 201 Created**
+![07 - Database sebelum POST](docs/evidence/07-db-before-post.png)
 
-![POST success](docs/evidence/08-post-success.png)
+### 08. POST `{"name":"Spidol","price":7500}` - 201 Created
 
-**10. PUT `/products/3` - 200 OK**
+Produk baru berhasil dibuat dengan id 3.
 
-![PUT success](docs/evidence/10-put-success.png)
+![08 - POST berhasil](docs/evidence/08-post-success.png)
 
-**12. DELETE `/products/3` - 204 No Content**
+### 09. Prisma Studio setelah POST - 3 data
 
-![DELETE success](docs/evidence/12-delete-success.png)
+Produk Spidol sudah masuk ke tabel.
 
-**13. DELETE `/products/999` - 404 Not Found**
+![09 - Database setelah POST](docs/evidence/09-db-after-post.png)
 
-![DELETE not found](docs/evidence/13-delete-not-found.png)
+### 10. PUT `/products/3` - 200 OK
 
-**15. GET `/products` setelah server restart - 200 OK**
+Produk id 3 diubah menjadi Spidol Snowman dengan harga 15000.
 
-![Data persists after restart](docs/evidence/15-data-persists-after-restart.png)
+![10 - PUT berhasil](docs/evidence/10-put-success.png)
 
-### Isi Database (Prisma Studio)
+### 11. Prisma Studio setelah PUT - data berubah
 
-**07. Sebelum POST - 2 data**
+Data Spidol sudah berubah sesuai hasil PUT.
 
-![DB before POST](docs/evidence/07-db-before-post.png)
+![11 - Database setelah PUT](docs/evidence/11-db-after-put.png)
 
-**09. Setelah POST - 3 data**
+### 12. DELETE `/products/3` - 204 No Content
 
-![DB after POST](docs/evidence/09-db-after-post.png)
+Produk id 3 berhasil dihapus.
 
-**11. Setelah PUT - data berubah**
+![12 - DELETE berhasil](docs/evidence/12-delete-success.png)
 
-![DB after PUT](docs/evidence/11-db-after-put.png)
+### 13. DELETE `/products/999` - 404 Not Found
 
-**14. Setelah DELETE - kembali 2 data**
+Menghapus produk yang tidak ada menghasilkan 404.
 
-![DB after DELETE](docs/evidence/14-db-after-delete.png)
+![13 - DELETE produk tidak ditemukan](docs/evidence/13-delete-not-found.png)
+
+### 14. Prisma Studio setelah DELETE - kembali 2 data
+
+Tabel kembali berisi 2 data, yaitu Buku dan Pulpen.
+
+![14 - Database setelah DELETE](docs/evidence/14-db-after-delete.png)
+
+### 15. GET `/products` setelah server restart - 200 OK
+
+Server dihentikan dengan Ctrl+C lalu dijalankan lagi. Datanya tetap ada,
+artinya data benar-benar tersimpan di PostgreSQL.
+
+![15 - Data tetap ada setelah restart](docs/evidence/15-data-persists-after-restart.png)
 
 ---
 
-## Hasil Verifikasi Backend (Sudah Diuji)
+## Hasil Pengujian
 
-Pengujian berikut dilakukan langsung ke server Express yang terhubung ke
-PostgreSQL (Neon), bukan simulasi:
+Pengujian di bawah ini saya lakukan langsung ke server Express yang terhubung
+ke PostgreSQL, bukan simulasi.
 
-| Skenario | Hasil |
-| -------- | ----- |
-| GET `/products` | `200 OK` |
-| GET `/products/1` | `200 OK` |
-| GET `/products/999` | `404 Not Found` |
-| GET `/products/abc` | `400 Bad Request` |
-| POST `name` kosong | `400 Bad Request` |
-| POST `price` negatif | `400 Bad Request` |
-| POST `price` desimal | `400 Bad Request` |
-| POST data valid | `201 Created` |
-| PUT data valid | `200 OK` |
-| GET produk hasil update | `200 OK` |
-| DELETE data valid | `204 No Content` |
-| GET produk yang sudah dihapus | `404 Not Found` |
-| DELETE ID tidak ada | `404 Not Found` |
-| GET endpoint tidak ada | `404 Not Found` |
+| Skenario                     | Hasil            |
+| ---------------------------- | ---------------- |
+| GET `/products`              | `200 OK`         |
+| GET `/products/1`            | `200 OK`         |
+| GET `/products/999`          | `404 Not Found`  |
+| GET `/products/abc`          | `400 Bad Request`|
+| POST `name` kosong           | `400 Bad Request`|
+| POST `price` negatif         | `400 Bad Request`|
+| POST `price` desimal         | `400 Bad Request`|
+| POST data valid              | `201 Created`    |
+| PUT data valid               | `200 OK`         |
+| GET produk hasil update      | `200 OK`         |
+| DELETE data valid            | `204 No Content` |
+| GET produk yang sudah dihapus| `404 Not Found`  |
+| DELETE ID tidak ada          | `404 Not Found`  |
+| GET endpoint tidak ada       | `404 Not Found`  |
 
 ---
 
-## Catatan Penting
+## Catatan
 
-- Data awal Week 9 (Buku Rp 15.000, Pulpen Rp 5.000) tersimpan permanen di
+- Data awal Week 9 (Buku Rp 15.000 dan Pulpen Rp 5.000) tersimpan permanen di
   PostgreSQL.
-- Restart server tidak menghapus data. Ini membuktikan migrasi dari array
-  volatile ke database persisten berhasil.
-- File `.env` tidak di-commit ke repository karena berisi credential database.
-- `npm run prisma:seed` akan mengosongkan tabel lalu mengisi ulang data awal.
+- Restart server tidak menghapus data. Ini buktinya migrasi dari array ke
+  database persisten berhasil.
+- File `.env` tidak di-commit karena berisi credential database.
+- Kalau mau mengembalikan data ke kondisi awal, jalankan `npm run prisma:seed`.
