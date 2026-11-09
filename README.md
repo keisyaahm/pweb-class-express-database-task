@@ -220,6 +220,74 @@ benar berjalan dan terhubung ke PostgreSQL, bukan hasil edit gambar.
 
 ---
 
+## Screenshot Evidence
+
+### Request API (Hoppscotch)
+
+**01. GET `/products` - 200 OK**
+
+![GET all products](docs/evidence/01-get-all-products.png)
+
+**02. GET `/products/1` - 200 OK**
+
+![GET product by ID](docs/evidence/02-get-product-by-id.png)
+
+**03. GET `/products/999` - 404 Not Found**
+
+![GET product not found](docs/evidence/03-get-product-not-found.png)
+
+**04. GET `/products/abc` - 400 Bad Request**
+
+![GET invalid ID](docs/evidence/04-get-invalid-id.png)
+
+**05. POST `name` kosong - 400 Bad Request**
+
+![POST validation fail name](docs/evidence/05-post-validation-fail-name.png)
+
+**06. POST `price` negatif - 400 Bad Request**
+
+![POST validation fail price](docs/evidence/06-post-validation-fail-price.png)
+
+**08. POST `Spidol` 7500 - 201 Created**
+
+![POST success](docs/evidence/08-post-success.png)
+
+**10. PUT `/products/3` - 200 OK**
+
+![PUT success](docs/evidence/10-put-success.png)
+
+**12. DELETE `/products/3` - 204 No Content**
+
+![DELETE success](docs/evidence/12-delete-success.png)
+
+**13. DELETE `/products/999` - 404 Not Found**
+
+![DELETE not found](docs/evidence/13-delete-not-found.png)
+
+**15. GET `/products` setelah server restart - 200 OK**
+
+![Data persists after restart](docs/evidence/15-data-persists-after-restart.png)
+
+### Isi Database (Prisma Studio)
+
+**07. Sebelum POST - 2 data**
+
+![DB before POST](docs/evidence/07-db-before-post.png)
+
+**09. Setelah POST - 3 data**
+
+![DB after POST](docs/evidence/09-db-after-post.png)
+
+**11. Setelah PUT - data berubah**
+
+![DB after PUT](docs/evidence/11-db-after-put.png)
+
+**14. Setelah DELETE - kembali 2 data**
+
+![DB after DELETE](docs/evidence/14-db-after-delete.png)
+
+---
+
 ## Hasil Verifikasi Backend (Sudah Diuji)
 
 Pengujian berikut dilakukan langsung ke server Express yang terhubung ke
