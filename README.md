@@ -1,21 +1,20 @@
-# Tugas Week 9 & 10: ExpressJS + PostgreSQL + Prisma
+# Backend Tugas 4: Integrasi Express, Prisma, dan React
 
-**Nama:** Keisya Halimah Mulia
-**NRP:** 5027251068
+**Nama:** Keisya Halimah Mulia  
+**NRP:** 5027251068  
 **Kelas:** Pemrograman Web C
 
 ---
 
 ## Tentang Tugas Ini
 
-Di tugas ini saya membuat REST API produk menggunakan ExpressJS. Mulanya data
-disimpan di array (`data/products.js`) untuk Week 9, lalu dipindahkan ke
-PostgreSQL menggunakan Prisma ORM untuk Week 10.
+Repository ini berawal dari REST API produk Week 9 dan Week 10. Pada Tugas 4,
+API dikembangkan agar dapat menjadi sumber data frontend React Manajemen
+Produk. Data tetap disimpan di PostgreSQL melalui Prisma ORM.
 
-Project ini **backend saja**. Tidak ada tampilan HTML/CSS/React buatan sendiri.
-Semua request diuji lewat aplikasi API client asli, yaitu **Hoppscotch**, dan
-isi database dilihat lewat **Prisma Studio**. Jadi tidak ada halaman web tiruan
-atau screenshot hasil rekayasa.
+Repository ini khusus backend. Frontend berada di
+[pweb-class-react-tailwind-task](https://github.com/keisyaahm/pweb-class-react-tailwind-task)
+dan berkomunikasi melalui REST API pada `http://localhost:3000`.
 
 ---
 
@@ -25,6 +24,25 @@ atau screenshot hasil rekayasa.
   disimpan di array in-memory.
 - **Week 10:** Data dipindah ke PostgreSQL lewat Prisma, ditambah validasi
   input, error handling, dan CRUD lengkap (GET, POST, PUT, DELETE).
+- **Tugas 4:** Model produk diperluas untuk kebutuhan dashboard, CORS
+  dikonfigurasi untuk Vite, dan frontend React dihubungkan ke seluruh operasi
+  CRUD.
+
+## Integrasi Tugas 4
+
+```text
+React (localhost:5173) -> Express (localhost:3000) -> Prisma -> PostgreSQL
+```
+
+Perubahan backend untuk Tugas 4:
+
+- Menambahkan field `category`, `stock`, `sku`, `description`, dan `createdAt`.
+- Menambahkan delapan produk awal untuk dashboard inventaris.
+- Mengaktifkan CORS untuk `localhost` dan `127.0.0.1` pada port Vite 5173/4173.
+- Menerima payload produk lengkap pada POST dan PUT.
+- Menambahkan `POST /products/reset` untuk mengembalikan data demo.
+- Tetap menyediakan GET, POST, PUT, dan DELETE yang digunakan langsung oleh
+  frontend React.
 
 ---
 
@@ -35,13 +53,15 @@ atau screenshot hasil rekayasa.
 ├── controllers/
 │   ├── productController.js       <- Week 9: GET & POST (array)
 │   ├── productGetController.js    <- Week 10: GET (Prisma)
-│   ├── productPostController.js   <- Week 10: POST (Prisma)
+│   ├── productPostController.js   <- POST dan reset data (Prisma)
 │   ├── productPutController.js    <- Week 10: PUT (Prisma)
 │   └── productDeleteController.js <- Week 10: DELETE (Prisma)
 ├── data/
-│   └── products.js                <- Week 9: array in-memory
+│   ├── products.js                <- Week 9: array in-memory
+│   └── initialProducts.js         <- 8 seed inventaris Tugas 4
 ├── lib/
-│   └── prisma.js                  <- Prisma Client singleton
+│   ├── prisma.js                  <- Prisma Client singleton
+│   └── productPayload.js          <- Normalisasi payload produk
 ├── middlewares/
 │   ├── requestLogger.js           <- Log setiap request
 │   ├── validateProduct.js         <- Validasi name & price
@@ -50,7 +70,7 @@ atau screenshot hasil rekayasa.
 │   └── notFoundHandler.js         <- 404 untuk route yang tidak ada
 ├── prisma/
 │   ├── schema.prisma              <- Model Product & konfigurasi database
-│   ├── seed.js                    <- Data awal (Buku & Pulpen)
+│   ├── seed.js                    <- Data awal inventaris Tugas 4
 │   └── migrations/                <- Riwayat migrasi tabel
 ├── routes/
 │   ├── productRoutes.js           <- Router utama
@@ -76,11 +96,14 @@ atau screenshot hasil rekayasa.
 | POST   | `/products`     | 201           | Membuat produk baru               |
 | PUT    | `/products/:id` | 200           | Update produk, 404 jika tidak ada |
 | DELETE | `/products/:id` | 204           | Hapus produk, 404 jika tidak ada  |
+| POST   | `/products/reset` | 200         | Reset ke delapan produk awal      |
 
 Aturan validasi:
 
 - `name` wajib string dan tidak boleh kosong.
 - `price` wajib bilangan bulat dan tidak boleh negatif.
+- `stock` wajib bilangan bulat non-negatif jika dikirim.
+- `category`, `sku`, dan `description` divalidasi sesuai tipe datanya.
 - `:id` wajib bilangan bulat positif. Kalau tidak, hasilnya `400 Bad Request`.
 
 ---
@@ -99,7 +122,7 @@ npx prisma generate
 # 4. Terapkan migrasi ke database
 npx prisma migrate deploy
 
-# 5. Isi data awal: Buku Rp 15.000 dan Pulpen Rp 5.000
+# 5. Isi delapan data inventaris awal
 npm run prisma:seed
 
 # 6. Jalankan server
@@ -158,7 +181,10 @@ Catatan:
 
 ---
 
-## Evidence Screenshot
+## Evidence Screenshot Week 9 dan Week 10
+
+Bagian berikut adalah bukti historis dari tugas backend sebelumnya. Pengujian
+integrasi Tugas 4 tersedia pada README frontend dan dijalankan terhadap API ini.
 
 ### 01. GET `/products` - 200 OK
 
@@ -277,11 +303,12 @@ ke PostgreSQL, bukan simulasi.
 
 ---
 
-## Catatan
+## Catatan Tugas 4
 
-- Data awal Week 9 (Buku Rp 15.000 dan Pulpen Rp 5.000) tersimpan permanen di
-  PostgreSQL.
+- Data awal saat ini berisi delapan produk inventaris untuk frontend React.
 - Restart server tidak menghapus data. Ini buktinya migrasi dari array ke
   database persisten berhasil.
 - File `.env` tidak di-commit karena berisi credential database.
 - Kalau mau mengembalikan data ke kondisi awal, jalankan `npm run prisma:seed`.
+- Origin frontend development dapat diatur melalui `FRONTEND_ORIGIN` pada
+  `.env`; beberapa origin dipisahkan dengan koma.
