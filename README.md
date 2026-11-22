@@ -10,7 +10,7 @@
 
 Repository ini berisi REST API backend untuk aplikasi Manajemen Produk. Proyek ini dibangun menggunakan ExpressJS, Prisma ORM, dan database PostgreSQL (Neon).
 
-Pada Tugas 4, backend ini dikembangkan sebagai sumber data utama yang terhubung langsung dengan frontend React pada repository [pweb-class-react-tailwind-task](https://github.com/keisyaahm/pweb-class-react-tailwind-task).
+Pada Tugas 4, backend ini dikembangkan sebagai sumber data utama yang terhubung langsung dengan frontend React pada repository [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task) (branch `tugas-4` / [PR #2](https://github.com/keisyaahm/pweb-class-react-task/pull/2)).
 
 ---
 
@@ -145,3 +145,17 @@ Seluruh pengujian endpoint dan database telah diverifikasi. Klik tautan pada kol
 | Penghapusan data (DELETE) | `204 No Content` |
 | Akses data tidak ditemukan | `404 Not Found` |
 | Persistensi restart server | Data tetap tersimpan di PostgreSQL |
+
+---
+
+## Daftar Tugas Pemrograman Web C
+
+Berikut adalah daftar seluruh repository dan Pull Request untuk tugas mata kuliah Pemrograman Web C:
+
+| No | Tugas | Topik / Deskripsi | Repository | Branch / PR |
+| :--: | :--- | :--- | :--- | :--- |
+| 1 | **Tugas 1 (Week 9 & 10)** | Express REST API, Prisma ORM, PostgreSQL (Neon) | [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | [PR #1](https://github.com/keisyaahm/pweb-class-express-database-task/pull/1) |
+| 2 | **Tugas 2 (Week 5 & 6)** | Interaktivitas DOM & JavaScript (Task Tracker) | [5027251068_TaskTracker](https://github.com/keisyaahm/5027251068_TaskTracker) | `main` |
+| 3 | **Tugas 3 (Week 12)** | Fundamental React (Manajemen Produk 48ORINESHOP) | [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task) | [PR #1](https://github.com/keisyaahm/pweb-class-react-task/pull/1) (`tugas-3`) |
+| 4 | **Tugas 4 (Week 13)** | React Router v7, Tailwind CSS, Integrasi Backend Express | Frontend: [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task)<br>Backend: [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | Frontend: [PR #2](https://github.com/keisyaahm/pweb-class-react-task/pull/2)<br>Backend: [PR #2](https://github.com/keisyaahm/pweb-class-express-database-task/pull/2) |
+
