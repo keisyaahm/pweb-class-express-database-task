@@ -152,10 +152,10 @@ Seluruh pengujian endpoint dan database telah diverifikasi. Klik tautan pada kol
 
 Berikut adalah daftar seluruh repository dan Pull Request untuk tugas mata kuliah Pemrograman Web C:
 
-| No | Tugas | Topik / Deskripsi | Repository | Branch / PR |
+| No | Tugas | Keterangan & Modul | Repository | Branch / PR |
 | :--: | :--- | :--- | :--- | :--- |
-| 1 | **Tugas 1 (Week 9 & 10)** | Express REST API, Prisma ORM, PostgreSQL (Neon) | [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | [PR #1](https://github.com/keisyaahm/pweb-class-express-database-task/pull/1) |
-| 2 | **Tugas 2 (Week 5 & 6)** | Interaktivitas DOM & JavaScript (Task Tracker) | [5027251068_TaskTracker](https://github.com/keisyaahm/5027251068_TaskTracker) | `main` |
-| 3 | **Tugas 3 (Week 12)** | Fundamental React (Manajemen Produk 48ORINESHOP) | [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task) | [PR #1](https://github.com/keisyaahm/pweb-class-react-task/pull/1) (`tugas-3`) |
-| 4 | **Tugas 4 (Week 13)** | React Router v7, Tailwind CSS, Integrasi Backend Express | Frontend: [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task)<br>Backend: [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | Frontend: [PR #2](https://github.com/keisyaahm/pweb-class-react-task/pull/2)<br>Backend: [PR #2](https://github.com/keisyaahm/pweb-class-express-database-task/pull/2) |
+| 1 | **Tugas 1** | Pengaplikasian ExpressJS untuk Development Backend (REST API in-memory) | [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | Branch `development` |
+| 2 | **Tugas 2** | Pengaplikasian ExpressJS Menggunakan Database untuk Development Backend (Prisma ORM + PostgreSQL Neon) | [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | [PR #1](https://github.com/keisyaahm/pweb-class-express-database-task/pull/1) |
+| 3 | **Tugas 3** | Pengaplikasian React untuk Development Frontend (Manajemen Produk 48ORINESHOP) | [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task) | [PR #1](https://github.com/keisyaahm/pweb-class-react-task/pull/1) (`tugas-3`) |
+| 4 | **Tugas 4** | Styling & Integrasi Project React dengan Project ExpressJS (React Router v7, Tailwind CSS v4, Fullstack Integration) | Frontend: [pweb-class-react-task](https://github.com/keisyaahm/pweb-class-react-task)<br>Backend: [pweb-class-express-database-task](https://github.com/keisyaahm/pweb-class-express-database-task) | Frontend: [PR #2](https://github.com/keisyaahm/pweb-class-react-task/pull/2)<br>Backend: [PR #2](https://github.com/keisyaahm/pweb-class-express-database-task/pull/2) |
 
