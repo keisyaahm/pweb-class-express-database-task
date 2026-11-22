@@ -102,10 +102,12 @@ npm start
 ```
 Server akan aktif di `http://localhost:3000`.
 
-Untuk memeriksa data langsung melalui GUI Prisma:
+### 5. Akses GUI Database (Prisma Studio)
+Untuk memeriksa dan mengelola data tabel PostgreSQL secara visual melalui antarmuka web GUI:
 ```bash
 npx prisma studio
 ```
+Prisma Studio akan aktif dan dapat dibuka di browser pada URL: `http://localhost:5555`.
 
 ---
 
